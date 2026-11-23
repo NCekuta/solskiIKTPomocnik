@@ -45,7 +45,7 @@ jobs:
             backend/sql
             frontend
             requirements.txt
-            railway.json
+            railpack.json
             !**/__pycache__
 
   test:
