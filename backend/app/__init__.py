@@ -6,7 +6,6 @@ Zažene se iz korenske mape projekta z ukazom:
     flask --app backend/app run --debug
 """
 
-import os
 from pathlib import Path
 
 from flask import Flask, redirect, render_template, url_for
