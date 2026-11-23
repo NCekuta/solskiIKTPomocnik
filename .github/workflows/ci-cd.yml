@@ -20,3 +20,28 @@ jobs:
         run: ruff check backend
       - name: Lint frontend (djLint)
         run: djlint frontend/templates --lint
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip  # predpomnjenje odvisnosti (pip cache)
+      - run: pip install -r requirements.txt
+      - name: Prevedi backend
+        run: python -m compileall -q backend/app
+      - name: Preveri, da se aplikacija ustvari
+        working-directory: backend
+        run: python -c "from app import create_app; create_app({'SECRET_KEY': 'build'})"
+      - name: Shrani paket aplikacije
+        uses: actions/upload-artifact@v4
+        with:
+          name: aplikacija
+          path: |
+            backend/app
+            backend/sql
+            frontend
+            requirements.txt
+            !**/__pycache__
