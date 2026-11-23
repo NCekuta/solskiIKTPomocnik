@@ -102,7 +102,7 @@ def test_skrbnik_preklice_rezervacijo_nedelujoce_opreme_z_razlogom(odjemalec, po
 
     # Brez razloga ne gre.
     stran = _preklici(odjemalec, podatki["rezervacija"]).get_data(as_text=True)
-    assert "razlog je obvezen" in stran
+    assert "je razlog obvezen" in stran
     assert _rezervacija(podatki["rezervacija"])["status"] == "aktivna"
 
     _preklici(odjemalec, podatki["rezervacija"], "Projektor je pokvarjen")
