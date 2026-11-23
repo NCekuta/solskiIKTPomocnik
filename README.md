@@ -1,10 +1,27 @@
 # Šolski IKT pomočnik
 
+[![CI/CD](https://github.com/NCekuta/solskiIKTPomocnik/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/NCekuta/solskiIKTPomocnik/actions/workflows/ci-cd.yml)
+
+**Nameščena aplikacija:** <https://aplikacija-production-0bc00fea.up.railway.app>
+
 Spletna aplikacija za **rezervacijo skupne šolske IKT-opreme** (prenosniki, projektorji, kompleti tablic) ter **prijavo in obravnavo tehničnih težav** znotraj ene šole.
 
 Narejen je celoten obseg MVP: prijava in vloge (učitelj, IKT skrbnik, administrator), upravljanje uporabnikov, učilnic in opreme, preverjanje razpoložljivosti, rezervacija brez prekrivanja terminov, pregled in preklic rezervacij, prijava težav, njihova obravnava (prevzem, zaključek, prerazporeditev) ter označevanje nedelujoče opreme.
 
 Uporabljene tehnologije: Python 3 s Flaskom, MySQL 8.4, Jinja predloge, Flask-Login in Flask-WTF.
+
+## CI/CD cevovod
+
+Cevovod (`.github/workflows/ci-cd.yml`) se zažene ob vsakem pull requestu in pushu na `main`:
+
+| Faza | Kaj naredi |
+| --- | --- |
+| `lint` | Preveri kodo backenda (Ruff) in Jinja predloge frontenda (djLint). |
+| `build` | Namesti odvisnosti (s predpomnjenjem pip), preveri, da se aplikacija ustvari, in jo shrani kot artefakt `aplikacija`. |
+| `test` | Zažene teste na MySQL bazi in shrani poročilo o pokritosti kode kot artefakt `pokritost-kode`. |
+| `deploy` | Samo ob pushu na `main` in po uspešnih `lint`, `build` in `test`: artefakt iz joba `build` namesti na Railway (okolje `production`). |
+
+Pull requesta v `main` ni mogoče združiti, dokler `lint`, `build` in `test` niso uspešni.
 
 ## Namestitev in zagon (Windows PowerShell)
 
