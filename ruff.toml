@@ -1,0 +1,6 @@
+# Nastavitve linterja Ruff (python -m ruff check backend)
+line-length = 120
+
+[lint]
+# E, W: slog kode (pycodestyle), F: napake v kodi (pyflakes)
+select = ["E", "F", "W"]
