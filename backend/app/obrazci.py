@@ -8,7 +8,8 @@ zavrne tudi vnos, ki vsebuje samo presledke.
 """
 
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, DateTimeLocalField, EmailField, PasswordField, SelectField, StringField, SubmitField, TextAreaField
+from wtforms import (BooleanField, DateTimeLocalField, EmailField, PasswordField, SelectField, StringField,
+                     SubmitField, TextAreaField)
 from wtforms.validators import DataRequired, Length, Optional, Regexp
 
 from .vloge import NAZIVI_VLOG
