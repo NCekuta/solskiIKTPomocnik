@@ -45,6 +45,7 @@ jobs:
             backend/sql
             frontend
             requirements.txt
+            railway.json
             !**/__pycache__
 
   test:
@@ -80,3 +81,20 @@ jobs:
         with:
           name: pokritost-kode
           path: htmlcov
+
+  deploy:
+    # samo ob pushu na main in samo, če so lint, build in test uspeli
+    needs: [lint, build, test]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Prenesi paket aplikacije iz joba build
+        uses: actions/download-artifact@v4
+        with:
+          name: aplikacija
+      - run: npm install -g @railway/cli
+      - name: Namesti na Railway
+        run: railway up --ci --service aplikacija
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
